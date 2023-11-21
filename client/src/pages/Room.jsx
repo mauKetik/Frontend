@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react"
 import { Sidebar } from "../components/SideBar"
 import axios from 'axios'
+import { WaitingRoom } from "./WaitingRoom"
+import ButtonSFX from '../sounds/button_shock_sfx.mp3'
+import useSound from "use-sound"
 
 export const Room = () => {
     const [rooms,setRooms] = useState([])
+    const [play] = useSound(ButtonSFX)
+    const [hiddenModal, setHiddenModal] = useState(true)
+    const [selectedRoomID,  setSelectedRoomID] = useState(null)
     useEffect(() => {
         const getRooms = async() => {
             try {
@@ -18,10 +24,10 @@ export const Room = () => {
         }
         getRooms()
     }, [])
-    console.log(rooms);
+
     const createRoomHandler = async () => {
         try {
-            console.log('aaaa');
+            play()
             const {data} = await axios.post('http://localhost:3000/create-room',{},{
                 headers : {Authorization : `${localStorage.access_token}`}
             })
@@ -33,21 +39,22 @@ export const Room = () => {
 
     const joinRoomHandler = async (roomId) => {
         try {
-            console.log('aaaa');
+            play()
             const {data} = await axios.patch(`http://localhost:3000/join-room/${roomId}`,roomId,{
                 headers : {Authorization : `${localStorage.access_token}`}
             })
-            console.log('sukses');
+            setSelectedRoomID(roomId)
+            setHiddenModal(false)
         } catch (error) {
             console.log(error);
         }
     }
-
+    
     return (
         <>  
     < Sidebar >
     <div class="p-6 bg-gray-50 text-medium text-gray-500 dark:text-white dark:bg-gray-800 rounded-lg w-full">
-
+{!hiddenModal && <WaitingRoom roomId={selectedRoomID} setHiddenModal={setHiddenModal}/>}
 <button onClick={createRoomHandler} class="bg-blue-400 px-4 py-1 rounded-lg text-lg font-bold text-gray-900 dark:text-white mb-2">Create Room</button>
 <div className="bg-gray-700 overflow-y-scroll">
     <table className="w-full text-center ">
