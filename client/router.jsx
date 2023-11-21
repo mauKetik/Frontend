@@ -4,6 +4,7 @@ import { Login } from "./src/pages/Login";
 import { Room } from "./src/pages/Room";
 import { Leaderboard } from "./src/pages/Leaderboard";
 import { Profile } from "./src/pages/Profile";
+import { TypingTest } from "./src/pages/TypingTest";
 
 export const router = createBrowserRouter([
     {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
             {
                 path : '/profile',
                 element  : < Profile />
+            },
+            {
+                path : '/test',
+                element  : < TypingTest />
             },
         ]
     }
