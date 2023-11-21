@@ -37,7 +37,7 @@ export const TypingTest = () => {
 
     < Card src={'https://cdn-icons-png.flaticon.com/512/3593/3593684.png'}>
         <label htmlFor="" className="block py-2">Chat us</label>
-        <form onSubmit={handleForm}>
+        <form >
             <input 
             defaultValue={typing}
             name="typing"
