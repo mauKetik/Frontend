@@ -6,6 +6,7 @@ import { Leaderboard } from "./src/pages/Leaderboard";
 import { Profile } from "./src/pages/Profile";
 import { TypingTest } from "./src/pages/TypingTest";
 import { Register } from "./src/pages/Register";
+import { WaitingRoom } from "./src/pages/WaitingRoom";
 
 export const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
                 path : '/test',
                 element  : < TypingTest />
             },
+            {
+                path : '/xyz',
+                element : < WaitingRoom />
+            }
         ]
     },
     {
