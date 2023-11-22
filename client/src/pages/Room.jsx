@@ -41,15 +41,27 @@ export const Room = () => {
         getRooms()
     }, [])
 
+    useEffect(() => {
+        socket.on('deleteRoom', (deletedRoom) => {
+            setRooms(deletedRoom)
+        })
+        // kalau mau ngebroadcast pake .io, bukan pake .socket
+        return () => {
+            socket.off('deleteRoom')
+        }
+        
+    },[socket])
+
    
 
     const destroyRoomHandle = async(roomId) => {
+        play()
         await axios.delete(`http://localhost:3000/room/${roomId}`,{
                 headers : {Authorization : `Bearer ${localStorage.access_token}`}
             })
-
-            setRooms(rooms.filter(val => val.roomId !== roomId)) 
-            socket.emit('deleteRoom', rooms)
+            let newRoom = rooms.filter(val => val.roomId !== roomId)
+            setRooms(newRoom) 
+            socket.emit('deleteRoom', newRoom)
             setHiddenModal(true)
     }
 
