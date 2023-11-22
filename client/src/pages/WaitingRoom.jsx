@@ -30,6 +30,17 @@ export const WaitingRoom = ({setHiddenModal, roomId, destroyRoomHandle}) => {
         
     },[])
 
+    useEffect(() => {
+        socket.on('userLeave', (leavedUser) => {
+            setValue(leavedUser)
+        })
+
+        return () => {
+            socket.off('userLeave')
+        }
+        
+    },[socket])
+
 
     useEffect(() => {
         const getRoomData = async() => {
@@ -45,9 +56,11 @@ export const WaitingRoom = ({setHiddenModal, roomId, destroyRoomHandle}) => {
     }, [])
 
     const leaveRoomHandle = async() => {
+        
         await axios.patch(`http://localhost:3000/leave-room/${roomId}`,{},{
                 headers : {Authorization : `Bearer ${localStorage.access_token}`}
             })
+            
             setValue(value.player2 = null) 
             socket.emit('userLeave', value)
             setHiddenModal(true)
