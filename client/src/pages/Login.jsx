@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import swal from "sweetalert";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { URL_DATA } from "../CONSTANT";
 import { toast } from 'react-toastify';
 
@@ -50,7 +50,10 @@ export const Login = () => {
   }
   return (
     <>
-      <div className="flex min-h-screen bg-blue-500">
+    <body style={{backgroundImage:'url(https://media.tenor.com/5_I50Sy1Y9cAAAAC/raining-raining-letters.gif)'}}>
+      
+    
+      <div className="flex min-h-screen">
         <div className="flex flex-col w-full max-w-md p-6 space-y-8 bg-white">
           <div className="flex justify-center">
             <img
@@ -59,13 +62,16 @@ export const Login = () => {
               alt="MauKetik"
             />
           </div>
+          <h1 className="text-7xl text-white rounded-md font-bangers py-1 bg-black text-shadow-white text-center">
+            MauKetik
+          </h1>
           <h1 className="text-2xl font-bold text-center">
             Log in to your account
           </h1>
           <div className="flex flex-col space-y-4">
             <div className="relative flex items-center">
               <div className="flex-grow border-t border-gray-300"></div>
-              {/* <span className="flex-shrink mx-4 text-gray-400">Or with email and password</span> */}
+              <span className="flex-shrink mx-4 text-gray-400">Do not have an account? <Link className="text-blue-500" to='/register'>Register</Link></span>
               <div className="flex-grow border-t border-gray-300"></div>
             </div>
             <input
@@ -84,7 +90,7 @@ export const Login = () => {
             />
             <button
               onClick={handleLogin}
-              className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+              className="w-full px-4 py-2  text-white rounded-md bg-black hover:bg-gray-800"
             >
               Next
             </button>
@@ -95,6 +101,7 @@ export const Login = () => {
           <div className="flex items-center justify-center w-full h-full p-10"></div>
         </div>
       </div>
+    </body>
     </>
   );
 };

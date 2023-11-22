@@ -37,58 +37,63 @@ export const Register = () => {
   }
   return (
     <>
-      <div className="flex min-h-screen bg-blue-500">
-        <div className="flex flex-col w-full max-w-md p-6 space-y-8 bg-white">
-          <div className="flex justify-center">
-            <img
-              src="src/assets/Mauketik.png"
-              className="w-40 rounded-lg shadow-xl"
-              alt="MauKetik"
-            />
-          </div>
-          <h1 className="text-2xl font-bold text-center">
-            Register to your account
-          </h1>
-          <div className="flex flex-col space-y-4">
-            <div className="relative flex items-center">
-              <div className="flex-grow border-t border-gray-300"></div>
-              {/* <span className="flex-shrink mx-4 text-gray-400">Or with email and password</span> */}
-              <div className="flex-grow border-t border-gray-300"></div>
+      <body style={{backgroundImage:'url(https://media.tenor.com/5_I50Sy1Y9cAAAAC/raining-raining-letters.gif)'}}>
+        <div className="flex min-h-screen">
+          <div className="flex flex-col w-full max-w-md p-6 space-y-8 bg-white">
+            <div className="flex justify-center">
+              <img
+                src="src/assets/Mauketik.png"
+                className="w-40 rounded-lg shadow-xl"
+                alt="MauKetik"
+              />
             </div>
-            <input
-              onChange={handleInput}
-              name="username"
-              className="w-full px-4 py-2 border rounded-md"
-              type="email"
-              placeholder="Username"
-            />
-            <input
-              onChange={handleInput}
-              name="email"
-              className="w-full px-4 py-2 border rounded-md"
-              type="email"
-              placeholder="Email Address"
-            />
-            <input
-              onChange={handleInput}
-              name="password"
-              className="w-full px-4 py-2 border rounded-md"
-              type="password"
-              placeholder="Password"
-            />
-            <button
-              onClick={handleRegister}
-              className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
-            >
-              Next
-            </button>
+            <h1 className="text-7xl text-white rounded-md font-bangers py-1 bg-black text-shadow-white text-center">
+            MauKetik
+          </h1>
+            <h1 className="text-2xl font-bold text-center">
+              Register to your account
+            </h1>
+            <div className="flex flex-col space-y-4">
+              <div className="relative flex items-center">
+                <div className="flex-grow border-t border-gray-300"></div>
+                
+                <div className="flex-grow border-t border-gray-300"></div>
+              </div>
+              <input
+                onChange={handleInput}
+                name="username"
+                className="w-full px-4 py-2 border rounded-md"
+                type="email"
+                placeholder="Username"
+              />
+              <input
+                onChange={handleInput}
+                name="email"
+                className="w-full px-4 py-2 border rounded-md"
+                type="email"
+                placeholder="Email Address"
+              />
+              <input
+                onChange={handleInput}
+                name="password"
+                className="w-full px-4 py-2 border rounded-md"
+                type="password"
+                placeholder="Password"
+              />
+              <button
+                onClick={handleRegister}
+                className="w-full px-4 py-2 text-white bg-black hover:bg-gray-800 rounded-md hover:bg-blue-700"
+              >
+                Register
+              </button>
+            </div>
+          </div>
+
+          <div className="hidden lg:block lg:w-1/2">
+            <div className="flex items-center justify-center w-full h-full p-10"></div>
           </div>
         </div>
-
-        <div className="hidden lg:block lg:w-1/2">
-          <div className="flex items-center justify-center w-full h-full p-10"></div>
-        </div>
-      </div>
+      </body>
     </>
   );
 };
