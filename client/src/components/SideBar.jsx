@@ -7,7 +7,6 @@ export const Sidebar = ({children}) => {
     const [play] = useSound(ButtonSFX)
 
     const buttonStyle = `inline-flex items-center px-4 py-3 text-white  rounded-lg active w-full `
-    console.log(path.pathname);
     return (
         <>
 <div className="md:flex mt-24 px-4">

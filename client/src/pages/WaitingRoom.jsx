@@ -3,10 +3,13 @@ import { useEffect, useState } from "react"
 
 import io from 'socket.io-client'
 import { WaitingRoomButton } from "../components/WaitingRoomButton"
+import ButtonSFX from '../sounds/button_shock_sfx.mp3'
+import useSound from "use-sound"
 
 const socket = io(('http://localhost:3000'))
 
 export const WaitingRoom = ({setHiddenModal, roomId, destroyRoomHandle}) => {
+    const [play] = useSound(ButtonSFX)
     let [value, setValue] = useState({})
     useEffect(() => {
         socket.on('userJoin', (guestJoin) => {
@@ -19,16 +22,7 @@ export const WaitingRoom = ({setHiddenModal, roomId, destroyRoomHandle}) => {
         
     },[socket])
 
-    useEffect(() => {
-        socket.on('deleteRoom', (deletedRoom) => {
-            setValue(deletedRoom)
-        })
-        // kalau mau ngebroadcast pake .io, bukan pake .socket
-        return () => {
-            socket.off('deleteRoom')
-        }
-        
-    },[])
+   
 
     useEffect(() => {
         socket.on('userLeave', (leavedUser) => {
@@ -56,7 +50,7 @@ export const WaitingRoom = ({setHiddenModal, roomId, destroyRoomHandle}) => {
     }, [])
 
     const leaveRoomHandle = async() => {
-        
+        play()
         await axios.patch(`http://localhost:3000/leave-room/${roomId}`,{},{
                 headers : {Authorization : `Bearer ${localStorage.access_token}`}
             })
@@ -94,7 +88,7 @@ export const WaitingRoom = ({setHiddenModal, roomId, destroyRoomHandle}) => {
                 </li>
             </ul>
             <div className="flex">
-            <button className="bg-blue-500 mx-auto rounded-lg px-2 py-1 flex justify-center">Start Game</button>
+            <button onClick={play} className="bg-blue-500 mx-auto rounded-lg px-2 py-1 flex justify-center">Start Game</button>
 
             < WaitingRoomButton leaveRoomHandle={leaveRoomHandle} destroyRoomHandle={destroyRoomHandle} inGame={value} className="bg-red-500 mx-auto rounded-lg px-2 py-1 flex justify-center"/>
             </div>
