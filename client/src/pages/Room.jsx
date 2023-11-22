@@ -41,16 +41,7 @@ export const Room = () => {
         getRooms()
     }, [])
 
-    useEffect(() => {
-        socket.on('userLeave', (leavedUser) => {
-            setValue(leavedUser)
-        })
-
-        return () => {
-            socket.off('userLeave')
-        }
-        
-    },[socket])
+   
 
     const destroyRoomHandle = async(roomId) => {
         await axios.delete(`http://localhost:3000/room/${roomId}`,{
