@@ -7,39 +7,44 @@ import { Profile } from "./src/pages/Profile";
 import { TypingTest } from "./src/pages/TypingTest";
 import { Register } from "./src/pages/Register";
 import { WaitingRoom } from "./src/pages/WaitingRoom";
+import { GameView } from "./src/pages/GameView";
 
 export const router = createBrowserRouter([
-    {
-        element : <   MainLayout />,
-        children : [
-            {
-                path : '/',
-                element  : < Room />
-            },
-            {
-                path : '/leaderboard',
-                element  : < Leaderboard />
-            },
-            {
-                path : '/profile',
-                element  : < Profile />
-            },
-            {
-                path : '/test',
-                element  : < TypingTest />
-            },
-            {
-                path : '/xyz',
-                element : < WaitingRoom />
-            }
-        ]
-    },
-    {
-        path : '/login',
-        element : < Login />
-    },
-    {
-        path : '/register',
-        element : < Register />
-    },
-])
+  {
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Room />,
+      },
+      {
+        path: "/leaderboard",
+        element: <Leaderboard />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/test",
+        element: <TypingTest />,
+      },
+      {
+        path: "/xyz",
+        element: <WaitingRoom />,
+      },
+      {
+        path: "/playing/:roomId",
+        element: <GameView />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+]);
