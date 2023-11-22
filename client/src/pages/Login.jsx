@@ -1,11 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 import { URL_DATA } from "../CONSTANT";
+import { toast } from 'react-toastify';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { setErrorMessage, setSuccessMessage, clearMessage } from '../store/HandleErrorRedux';
 
 export const Login = () => {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const { message, messageType } = useSelector(state => state.error);
+
+  useEffect(() => {
+    if (message) {
+      if (messageType === 'error') {
+        toast.error(message);
+      } else if (messageType === 'success') {
+        toast.success(message);
+      }
+      dispatch(clearMessage());
+    }
+  }, [message, messageType, dispatch]);
+  
   const [form, setForm] = useState({ email: "", password: "" });
   function handleInput(event) {
     setForm((prev) => {
@@ -20,10 +39,13 @@ export const Login = () => {
         url: URL_DATA + "/login",
         data: { email: form.email, password: form.password },
       });
+      dispatch(setErrorMessage(`Welcome to MauKetik ${data.email}!`));
+
       localStorage.access_token = data.access_token;
       navigate("/");
     } catch (error) {
-      swal("Login Failed", error.response.data.message, "error");
+      console.log(error.response.statusText);
+      dispatch(setErrorMessage(`Error : ${error.response.statusText}`));
     }
   }
   return (
