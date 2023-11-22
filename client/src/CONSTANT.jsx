@@ -1,1 +1,1 @@
-export const URL_DATA = "http://localhost:3000";
+export const URL_DATA = "https://mauketik.ardianto-hck64.my.id";
