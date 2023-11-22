@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import swal from "sweetalert";
+import io from "socket.io-client";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { URL_DATA } from "../CONSTANT";
+const socket = io("http://localhost:3000");
+
 export function GameView(props) {
+  const navigate = useNavigate();
+  let { roomId } = useParams();
   // Define state variables using useState hook
   const [options, setOptions] = useState(
     "abcdefghijklmnopqrstuvwxyz0123456789".split("")
@@ -9,6 +17,7 @@ export function GameView(props) {
   const [optionsPlaying, setOptionsPlaying] = useState([]);
   const [speed, setSpeed] = useState(0.9);
   const [score, setScore] = useState(0);
+  const [otherScore, setOtherScore] = useState(0);
 
   // Define other variables using useRef hook
   const gameTime = useRef(0);
@@ -17,6 +26,10 @@ export function GameView(props) {
   const interval = useRef(null);
   const intervalCounter = useRef(null);
 
+  socket.on("otherScoreUpdate", (otherNewScore) => {
+    console.log(otherNewScore);
+    setOtherScore(otherNewScore);
+  });
   // Define functions using useCallback hook
   const randomIntInRange = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -64,14 +77,32 @@ export function GameView(props) {
     });
   };
 
-  const onGameOver = () => {
+  const onGameOver = async () => {
     clearInterval(intervalCounter.current);
     clearInterval(interval.current);
     clearInterval(intervalCounter.current);
-    swal("Game Over!", `your score is ${score}`, "error");
-    // setTimeout(() => {
-    //   swal("Game Over!", `your score is ${score}`, "error");
-    // }, 500);
+    let isWin = false;
+    if (score > otherScore) {
+      isWin = true;
+      swal("You Win!", `your score is ${score}`, "success");
+    } else if (score < otherScore) {
+      swal("You Lose!", `your score is ${score}`, "error");
+    } else {
+      swal("Draw!", `your score is ${score}`, "error");
+    }
+    await axios({
+      method: "patch",
+      url: URL_DATA + `/gameOver/${roomId}`,
+      headers: { Authorization: `Bearer ${localStorage.access_token}` },
+    });
+
+    await axios({
+      method: "patch",
+      url: URL_DATA + `/update-my-profile`,
+      data: { isWin },
+      headers: { Authorization: `Bearer ${localStorage.access_token}` },
+    });
+    navigate("/");
   };
 
   const gameInterval = () => {
@@ -100,10 +131,12 @@ export function GameView(props) {
           prevOptionsPlaying[index].deathTimer = 0;
           return [...prevOptionsPlaying];
         });
+        socket.emit("otherScore", { score: score + 1, roomId: roomId });
         setScore((prevScore) => prevScore + 1);
       }
     });
     if (!found) {
+      socket.emit("otherScore", { score: score - 1, roomId: roomId });
       setScore((prevScore) => prevScore - 1);
     }
     e.target.value = "";
@@ -136,10 +169,18 @@ export function GameView(props) {
         document.querySelector("input").focus();
       }}
     >
-      <h1 style={{ color: "red", fontSize: "50px", textAlign: "center",marginTop:"100px" }}>
+      <h1
+        style={{
+          color: "red",
+          fontSize: "50px",
+          textAlign: "center",
+          marginTop: "100px",
+        }}
+      >
         <b>{counter}</b>
       </h1>
-      <h1>Score: {score}</h1>
+      <h1>My Score: {score}</h1>
+      <h1>Other Score: {otherScore}</h1>
       <input
         type="text"
         autoFocus
