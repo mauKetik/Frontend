@@ -4,10 +4,10 @@ import axios from 'axios'
 import { WaitingRoom } from "./WaitingRoom"
 import ButtonSFX from '../sounds/button_shock_sfx.mp3'
 import useSound from "use-sound"
-
+import { URL_DATA } from "../CONSTANT";
 import io from 'socket.io-client'
 
-const socket = io(('http://localhost:3000'))
+const socket = io((URL_DATA))
 
 export const Room = () => {
     const [rooms,setRooms] = useState([])
@@ -30,7 +30,7 @@ export const Room = () => {
     useEffect(() => {
         const getRooms = async() => {
             try {
-                const {data} = await axios.get('http://localhost:3000/rooms',{
+                const {data} = await axios.get(URL_DATA+'/rooms',{
                     headers : {Authorization : `Bearer ${localStorage.access_token}`}
                 })
                 setRooms(data)
@@ -56,7 +56,7 @@ export const Room = () => {
 
     const destroyRoomHandle = async(roomId) => {
         play()
-        await axios.delete(`http://localhost:3000/room/${roomId}`,{
+        await axios.delete(`${URL_DATA}/room/${roomId}`,{
                 headers : {Authorization : `Bearer ${localStorage.access_token}`}
             })
             let newRoom = rooms.filter(val => val.roomId !== roomId)
@@ -68,7 +68,7 @@ export const Room = () => {
     const createRoomHandler = async () => {
         try {
             play()
-            const {data} = await axios.post('http://localhost:3000/create-room',{},{
+            const {data} = await axios.post(URL_DATA+'/create-room',{},{
                 headers : {Authorization : `Bearer ${localStorage.access_token}`}
             })
             setSelectedRoomID(data.roomId)
@@ -83,7 +83,7 @@ export const Room = () => {
     const joinRoomHandler = async (roomId) => {
         try {
             play()
-            const {data} = await axios.patch(`http://localhost:3000/join-room/${roomId}`,roomId,{
+            const {data} = await axios.patch(URL_DATA+`/join-room/${roomId}`,roomId,{
                 headers : {Authorization : `Bearer ${localStorage.access_token}`}
             })
             setSelectedRoomID(roomId)
