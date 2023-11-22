@@ -4,9 +4,20 @@ import io from "socket.io-client";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { URL_DATA } from "../CONSTANT";
+import GamePlaySFX from '../sounds/bibibubap.mp3'
+import GameFinishedSFX from '../sounds/game_finished.mp3'
+import useSound from "use-sound"
+
 const socket = io("http://localhost:3000");
 
 export function GameView(props) {
+  const [play, {stop}] = useSound(GamePlaySFX, {loop : true})
+  const [playFinished] = useSound(GameFinishedSFX)
+
+  useEffect(() => {
+    play()
+  }, [play]);
+  
   const navigate = useNavigate();
   let { roomId } = useParams();
   // Define state variables using useState hook
@@ -78,6 +89,8 @@ export function GameView(props) {
   };
 
   const onGameOver = async () => {
+    stop()
+    playFinished()
     clearInterval(intervalCounter.current);
     clearInterval(interval.current);
     clearInterval(intervalCounter.current);
@@ -179,8 +192,8 @@ export function GameView(props) {
       >
         <b>{counter}</b>
       </h1>
-      <h1>My Score: {score}</h1>
-      <h1>Other Score: {otherScore}</h1>
+      <h1 className="font-luckiest-guy text-2xl">My Score: {score}</h1>
+      <h1 className="font-luckiest-guy text-2xl">Other Score: {otherScore}</h1>
       <input
         type="text"
         autoFocus

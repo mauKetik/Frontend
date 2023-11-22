@@ -156,7 +156,7 @@ export const WaitingRoom = ({ setHiddenModal, roomId, destroyRoomHandle }) => {
           <div className="flex">
             <button
               onClick={handleStart}
-              className="bg-blue-500 mx-auto rounded-lg px-2 py-1 flex justify-center"
+              className="bg-blue-900 hover:scale-110 active:scale-100 mx-auto rounded-lg px-2 py-1 flex justify-center"
             >
               Start Game
             </button>
@@ -165,7 +165,7 @@ export const WaitingRoom = ({ setHiddenModal, roomId, destroyRoomHandle }) => {
               leaveRoomHandle={leaveRoomHandle}
               destroyRoomHandle={destroyRoomHandle}
               inGame={value}
-              className="bg-red-500 mx-auto rounded-lg px-2 py-1 flex justify-center"
+              className="bg-red-800 hover:scale-110 active:scale-100 mx-auto rounded-lg px-2 py-1 flex justify-center"
             />
           </div>
         </div>

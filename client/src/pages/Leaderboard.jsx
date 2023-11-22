@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { Sidebar } from "../components/SideBar";
-import "./Leaderboard.css"
 import ListLeaderboard from "./ListLeaderboard";
 import axios from "axios"
 
 export const Leaderboard = () => {
-    const [user, setUser] = useState([]);
+    const [users, setUsers] = useState([]);
 
     useEffect(() =>{
         getUserData()
@@ -20,7 +19,7 @@ export const Leaderboard = () => {
                     "Authorization" : "Bearer " + localStorage.access_token
                 }
             })
-            setUser(data)
+            setUsers(data)
             // console.log(data, "<<");
         } catch (error) {
             console.log(error);
@@ -28,39 +27,20 @@ export const Leaderboard = () => {
     }
   return (
     <>
-      <Sidebar>
-        <div class="p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full">
-          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
-            Leaderboard
-          </h3>
-          <p class="mb-2">
-            This is some placeholder content the Profile tab's associated
-            content, clicking another tab will toggle the visibility of this one
-            for the next.
-          </p>
-          <p>
-            The tab JavaScript swaps classes to control the content visibility
-            and styling.
-          </p>
-          <div id="table">
-        <table>
-            <tr id="head">
-                <th>Rank</th>
-                <th>Username</th>
-                <th>Total Game</th>
-                <th>Total Win</th>
-                <th>Win Rate</th>
-            </tr>
-            {user && user.map((users, i) =>{
-               return <ListLeaderboard users={users} i={i} />
-            })}
-        </table>
+    <Sidebar>
+  <div className="p-6 bg-blue-50 border-4 shadow-xl border-blue-300 text-gray-500 dark:text-gray-400 dark:bg-blue-900 rounded-lg w-full">
+    <div className="mb-4 text-5xl bg-gradient-to-b text-transparent bg-clip-text from-blue-500 to-cyan-500 font-bold text-center">LEADERBOARD</div>
+    
+      {users && users.map((user, i) => (
+        <ListLeaderboard key={user.id} user={user} i={i} />
+      ))}
+    </div>
+  
+</Sidebar>
 
-      </div>
-        </div>
-      </Sidebar>
       
       
     </>
   );
 };
+
