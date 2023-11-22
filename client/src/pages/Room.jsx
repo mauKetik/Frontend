@@ -32,7 +32,7 @@ export const Room = () => {
             try {
                 console.log(localStorage.Authorization);
                 const {data} = await axios.get('http://localhost:3000/rooms',{
-                    headers : {Authorization : `${localStorage.access_token}`}
+                    headers : {Authorization : `Bearer ${localStorage.access_token}`}
                 })
                 setRooms(data)
             } catch (error) {
@@ -46,7 +46,7 @@ export const Room = () => {
         try {
             play()
             const {data} = await axios.post('http://localhost:3000/create-room',{},{
-                headers : {Authorization : `${localStorage.access_token}`}
+                headers : {Authorization : `Bearer ${localStorage.access_token}`}
             })
             setSelectedRoomID(data.roomId)
             socket.emit('createRoom', [...rooms, data])
@@ -61,7 +61,7 @@ export const Room = () => {
         try {
             play()
             const {data} = await axios.patch(`http://localhost:3000/join-room/${roomId}`,roomId,{
-                headers : {Authorization : `${localStorage.access_token}`}
+                headers : {Authorization : `Bearer ${localStorage.access_token}`}
             })
             setSelectedRoomID(roomId)
             
