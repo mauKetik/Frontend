@@ -5,6 +5,10 @@ import { WaitingRoom } from "./WaitingRoom"
 import ButtonSFX from '../sounds/button_shock_sfx.mp3'
 import useSound from "use-sound"
 
+import io from 'socket.io-client'
+
+const socket = io(('http://localhost:3000'))
+
 export const Room = () => {
     const [rooms,setRooms] = useState([])
     const [play] = useSound(ButtonSFX)
@@ -31,6 +35,9 @@ export const Room = () => {
             const {data} = await axios.post('http://localhost:3000/create-room',{},{
                 headers : {Authorization : `${localStorage.access_token}`}
             })
+            setSelectedRoomID(data.roomId)
+            socket.emit('createRoom', [...rooms, data])
+            setHiddenModal(false)
             setRooms([...rooms, data])
         } catch (error) {
             console.log(error);
@@ -44,6 +51,7 @@ export const Room = () => {
                 headers : {Authorization : `${localStorage.access_token}`}
             })
             setSelectedRoomID(roomId)
+            
             setHiddenModal(false)
         } catch (error) {
             console.log(error);
@@ -55,7 +63,7 @@ export const Room = () => {
     < Sidebar >
     <div class="p-6 bg-gray-50 text-medium text-gray-500 dark:text-white dark:bg-gray-800 rounded-lg w-full">
 {!hiddenModal && <WaitingRoom roomId={selectedRoomID} setHiddenModal={setHiddenModal}/>}
-<button onClick={createRoomHandler} class="bg-blue-400 px-4 py-1 rounded-lg text-lg font-bold text-gray-900 dark:text-white mb-2">Create Room</button>
+<button onClick={createRoomHandler} class="active:scale-90 bg-blue-400 px-4 py-1 rounded-lg text-lg font-bold text-gray-900 dark:text-white mb-2">Create Room</button>
 <div className="bg-gray-700 overflow-y-scroll">
     <table className="w-full text-center ">
         
@@ -71,7 +79,7 @@ export const Room = () => {
         <tr className="bg-gray-700 ">
             <td className="py-4">{val.roomId}</td>
             <td>{val.player1?.username}'s Room</td>
-            <td><button onClick={() => joinRoomHandler(val.roomId)} className="bg-blue-400 px-6 rounded-lg py-1">Join</button></td>
+            <td><button onClick={() => joinRoomHandler(val.roomId)} className="active:scale-90 bg-blue-400 px-6 rounded-lg py-1">Join</button></td>
         </tr>   
                 </>
             )
