@@ -9,8 +9,6 @@ export const WaitingRoom = ({setHiddenModal, roomId}) => {
     const [value, setValue] = useState({})
     useEffect(() => {
         socket.on('userJoin', (guestJoin) => {
-            // setChatMessages(prevMessage => [...prevMessage,typing])
-            // console.log(typing)
             setValue(guestJoin)
         })
         // kalau mau ngebroadcast pake .io, bukan pake .socket
@@ -23,7 +21,7 @@ export const WaitingRoom = ({setHiddenModal, roomId}) => {
     useEffect(() => {
         const getRoomData = async() => {
             const {data} =  await axios.get(`http://localhost:3000/rooms/${roomId}`,{
-                headers : {Authorization : `${localStorage.access_token}`}
+                headers : {Authorization : `Bearer ${localStorage.access_token}`}
             })
             setValue(data)
             console.log(data);
