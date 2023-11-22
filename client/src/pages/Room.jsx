@@ -30,7 +30,6 @@ export const Room = () => {
     useEffect(() => {
         const getRooms = async() => {
             try {
-                console.log(localStorage.Authorization);
                 const {data} = await axios.get('http://localhost:3000/rooms',{
                     headers : {Authorization : `Bearer ${localStorage.access_token}`}
                 })
@@ -41,6 +40,27 @@ export const Room = () => {
         }
         getRooms()
     }, [])
+
+    useEffect(() => {
+        socket.on('userLeave', (leavedUser) => {
+            setValue(leavedUser)
+        })
+
+        return () => {
+            socket.off('userLeave')
+        }
+        
+    },[socket])
+
+    const destroyRoomHandle = async(roomId) => {
+        await axios.delete(`http://localhost:3000/room/${roomId}`,{
+                headers : {Authorization : `Bearer ${localStorage.access_token}`}
+            })
+
+            setRooms(rooms.filter(val => val.roomId !== roomId)) 
+            socket.emit('deleteRoom', rooms)
+            setHiddenModal(true)
+    }
 
     const createRoomHandler = async () => {
         try {
@@ -70,12 +90,14 @@ export const Room = () => {
             console.log(error);
         }
     }
+
+    
     
     return (
         <>  
     < Sidebar >
     <div class="p-6 bg-gray-50 text-medium text-gray-500 dark:text-white dark:bg-gray-800 rounded-lg w-full">
-{!hiddenModal && <WaitingRoom roomId={selectedRoomID} setHiddenModal={setHiddenModal}/>}
+{!hiddenModal && <WaitingRoom destroyRoomHandle={() => destroyRoomHandle(selectedRoomID)} roomId={selectedRoomID} setHiddenModal={setHiddenModal}/>}
 <button onClick={createRoomHandler} class="active:scale-90 bg-blue-400 px-4 py-1 rounded-lg text-lg font-bold text-gray-900 dark:text-white mb-2">Create Room</button>
 <div className="bg-gray-700 overflow-y-scroll">
     <table className="w-full text-center ">

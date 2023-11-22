@@ -2,16 +2,17 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 
 import io from 'socket.io-client'
+import { WaitingRoomButton } from "../components/WaitingRoomButton"
 
 const socket = io(('http://localhost:3000'))
 
-export const WaitingRoom = ({setHiddenModal, roomId}) => {
-    const [value, setValue] = useState({})
+export const WaitingRoom = ({setHiddenModal, roomId, destroyRoomHandle}) => {
+    let [value, setValue] = useState({})
     useEffect(() => {
         socket.on('userJoin', (guestJoin) => {
             setValue(guestJoin)
         })
-        // kalau mau ngebroadcast pake .io, bukan pake .socket
+
         return () => {
             socket.off('userJoin')
         }
@@ -19,18 +20,39 @@ export const WaitingRoom = ({setHiddenModal, roomId}) => {
     },[socket])
 
     useEffect(() => {
+        socket.on('deleteRoom', (deletedRoom) => {
+            setValue(deletedRoom)
+        })
+        // kalau mau ngebroadcast pake .io, bukan pake .socket
+        return () => {
+            socket.off('deleteRoom')
+        }
+        
+    },[])
+
+
+    useEffect(() => {
         const getRoomData = async() => {
             const {data} =  await axios.get(`http://localhost:3000/rooms/${roomId}`,{
                 headers : {Authorization : `Bearer ${localStorage.access_token}`}
             })
             setValue(data)
-            console.log(data);
             socket.emit('userJoin', data)
         }
         
         getRoomData()
 
     }, [])
+
+    const leaveRoomHandle = async() => {
+        await axios.patch(`http://localhost:3000/leave-room/${roomId}`,{},{
+                headers : {Authorization : `Bearer ${localStorage.access_token}`}
+            })
+            setValue(value.player2 = null) 
+            socket.emit('userLeave', value)
+            setHiddenModal(true)
+    }
+  
 
     return (
         <>
@@ -60,7 +82,8 @@ export const WaitingRoom = ({setHiddenModal, roomId}) => {
             </ul>
             <div className="flex">
             <button className="bg-blue-500 mx-auto rounded-lg px-2 py-1 flex justify-center">Start Game</button>
-            <button onClick={() => setHiddenModal(true)} className="bg-red-500 mx-auto rounded-lg px-2 py-1 flex justify-center">Cancel</button>
+
+            < WaitingRoomButton leaveRoomHandle={leaveRoomHandle} destroyRoomHandle={destroyRoomHandle} inGame={value} className="bg-red-500 mx-auto rounded-lg px-2 py-1 flex justify-center"/>
             </div>
         
         </div>
