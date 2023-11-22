@@ -8,6 +8,7 @@ export const TypingTest = () => {
     const [typing, setTyping] = useState('')
     const [chatMessages, setChatMessages] = useState([])
 
+
     useEffect(() => {
         socket.on('typingValue', (typingRes) => {
             // setChatMessages(prevMessage => [...prevMessage,typing])

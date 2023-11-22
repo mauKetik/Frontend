@@ -14,6 +14,19 @@ export const Room = () => {
     const [play] = useSound(ButtonSFX)
     const [hiddenModal, setHiddenModal] = useState(true)
     const [selectedRoomID,  setSelectedRoomID] = useState(null)
+
+    useEffect(() => {
+        socket.on('createRoom', (createdRoom) => {
+            setRooms(createdRoom)
+        })
+        // kalau mau ngebroadcast pake .io, bukan pake .socket
+        return () => {
+            socket.off('createRoom')
+        }
+        
+    },[socket])
+   
+    
     useEffect(() => {
         const getRooms = async() => {
             try {
