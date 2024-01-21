@@ -1,6 +1,5 @@
 import { Sidebar } from "../components/SideBar"
 import React, { useEffect, useState } from 'react';
-import { URL_DATA } from "../CONSTANT";
 
 import axios from "axios";
 import { winRate } from "../helpers/winRate";

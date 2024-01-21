@@ -6,7 +6,7 @@ import ButtonSFX from '../sounds/button_shock_sfx.mp3'
 import useSound from "use-sound"
 import { URL_DATA } from "../CONSTANT";
 import io from 'socket.io-client'
-import { URL_DATA } from "../CONSTANT"
+
 
 const socket = io((URL_DATA))
 
