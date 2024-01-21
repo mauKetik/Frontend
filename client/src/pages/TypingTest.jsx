@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react"
 import { Card } from "../components/Card"
 import io from 'socket.io-client'
-<<<<<<< HEAD
 import { URL_DATA } from "../CONSTANT"
-=======
-import { URL_DATA } from "../CONSTANT";
->>>>>>> d34dfaf6aae4a6f0b35494864128b361a8c8d075
 
 const socket = io((URL_DATA))
 

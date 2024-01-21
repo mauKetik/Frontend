@@ -1,11 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-<<<<<<< HEAD
-
-=======
-import Mauketik from "../assets/Mauketik.png";
-console.log(Mauketik);
->>>>>>> d34dfaf6aae4a6f0b35494864128b361a8c8d075
 import { Link, useNavigate } from "react-router-dom";
 import { URL_DATA } from "../CONSTANT";
 import { toast } from "react-toastify";
