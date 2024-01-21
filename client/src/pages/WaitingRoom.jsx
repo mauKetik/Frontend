@@ -7,7 +7,10 @@ import ButtonSFX from "../sounds/button_shock_sfx.mp3";
 import useSound from "use-sound";
 import { useNavigate } from "react-router-dom";
 import { URL_DATA } from "../CONSTANT";
+<<<<<<< HEAD
 
+=======
+>>>>>>> d34dfaf6aae4a6f0b35494864128b361a8c8d075
 const socket = io(URL_DATA);
 
 export const WaitingRoom = ({ setHiddenModal, roomId, destroyRoomHandle }) => {

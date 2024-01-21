@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
 import { URL_DATA } from "../CONSTANT";
+import Mauketik from "../assets/Mauketik.png";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -36,26 +37,31 @@ export const Register = () => {
   }
   return (
     <>
-      <body style={{backgroundImage:'url(https://media.tenor.com/5_I50Sy1Y9cAAAAC/raining-raining-letters.gif)'}}>
+      <body
+        style={{
+          backgroundImage:
+            "url(https://media.tenor.com/5_I50Sy1Y9cAAAAC/raining-raining-letters.gif)",
+        }}
+      >
         <div className="flex min-h-screen">
           <div className="flex flex-col w-full max-w-md p-6 space-y-8 bg-white">
             <div className="flex justify-center">
               <img
-                src="src/assets/Mauketik.png"
+                src={Mauketik}
                 className="w-40 rounded-lg shadow-xl"
                 alt="MauKetik"
               />
             </div>
             <h1 className="text-7xl text-white rounded-md font-bangers py-1 bg-black text-shadow-white text-center">
-            MauKetik
-          </h1>
+              MauKetik
+            </h1>
             <h1 className="text-2xl font-bold text-center">
               Register to your account
             </h1>
             <div className="flex flex-col space-y-4">
               <div className="relative flex items-center">
                 <div className="flex-grow border-t border-gray-300"></div>
-                
+
                 <div className="flex-grow border-t border-gray-300"></div>
               </div>
               <input

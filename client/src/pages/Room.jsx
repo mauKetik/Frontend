@@ -4,7 +4,7 @@ import axios from 'axios'
 import { WaitingRoom } from "./WaitingRoom"
 import ButtonSFX from '../sounds/button_shock_sfx.mp3'
 import useSound from "use-sound"
-
+import { URL_DATA } from "../CONSTANT";
 import io from 'socket.io-client'
 import { URL_DATA } from "../CONSTANT"
 
@@ -31,7 +31,11 @@ export const Room = () => {
     useEffect(() => {
         const getRooms = async() => {
             try {
+<<<<<<< HEAD
                 const {data} = await axios.get(`${URL_DATA}/rooms`,{
+=======
+                const {data} = await axios.get(URL_DATA+'/rooms',{
+>>>>>>> d34dfaf6aae4a6f0b35494864128b361a8c8d075
                     headers : {Authorization : `Bearer ${localStorage.access_token}`}
                 })
                 setRooms(data)
@@ -69,7 +73,11 @@ export const Room = () => {
     const createRoomHandler = async () => {
         try {
             play()
+<<<<<<< HEAD
             const {data} = await axios.post(`${URL_DATA}/create-room`,{},{
+=======
+            const {data} = await axios.post(URL_DATA+'/create-room',{},{
+>>>>>>> d34dfaf6aae4a6f0b35494864128b361a8c8d075
                 headers : {Authorization : `Bearer ${localStorage.access_token}`}
             })
             setSelectedRoomID(data.roomId)
@@ -84,7 +92,11 @@ export const Room = () => {
     const joinRoomHandler = async (roomId) => {
         try {
             play()
+<<<<<<< HEAD
             const {data} = await axios.patch(`${URL_DATA}/join-room/${roomId}`,roomId,{
+=======
+            const {data} = await axios.patch(URL_DATA+`/join-room/${roomId}`,roomId,{
+>>>>>>> d34dfaf6aae4a6f0b35494864128b361a8c8d075
                 headers : {Authorization : `Bearer ${localStorage.access_token}`}
             })
             setSelectedRoomID(roomId)

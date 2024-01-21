@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Sidebar } from "../components/SideBar";
 import ListLeaderboard from "./ListLeaderboard";
 import axios from "axios"
+import { URL_DATA } from "../CONSTANT";
 
 export const Leaderboard = () => {
     const [users, setUsers] = useState([]);
@@ -14,7 +15,11 @@ export const Leaderboard = () => {
         try {
             const { data } = await axios({
                 method : "get",
+<<<<<<< HEAD
                 url : `${URL_DATA}/leaderboard`,
+=======
+                url : URL_DATA+"/leaderboard",
+>>>>>>> d34dfaf6aae4a6f0b35494864128b361a8c8d075
                 headers : {
                     "Authorization" : "Bearer " + localStorage.access_token
                 }

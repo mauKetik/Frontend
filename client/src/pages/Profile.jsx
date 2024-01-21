@@ -1,6 +1,6 @@
 import { Sidebar } from "../components/SideBar"
 import React, { useEffect, useState } from 'react';
-
+import { URL_DATA } from "../CONSTANT";
 
 import axios from "axios";
 import { winRate } from "../helpers/winRate";
@@ -17,7 +17,11 @@ export const Profile = () => {
         try {
             const {data} = await axios({
                 method : "get",
+<<<<<<< HEAD
                 url : `${URL_DATA}/my-profile`,
+=======
+                url : URL_DATA+"/my-profile",
+>>>>>>> d34dfaf6aae4a6f0b35494864128b361a8c8d075
                 headers : {
                     "Authorization" : "Bearer " + localStorage.access_token
                 }
