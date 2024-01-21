@@ -8,7 +8,7 @@ import GamePlaySFX from '../sounds/bibibubap.mp3'
 import GameFinishedSFX from '../sounds/game_finished.mp3'
 import useSound from "use-sound"
 
-const socket = io("http://localhost:3000");
+const socket = io(URL_DATA);
 
 export function GameView(props) {
   const [play, {stop}] = useSound(GamePlaySFX, {loop : true})
@@ -24,7 +24,7 @@ export function GameView(props) {
   const [options, setOptions] = useState(
     "abcdefghijklmnopqrstuvwxyz0123456789".split("")
   );
-  const [counter, setCounter] = useState(20);
+  const [counter, setCounter] = useState(60);
   const [optionsPlaying, setOptionsPlaying] = useState([]);
   const [speed, setSpeed] = useState(0.9);
   const [score, setScore] = useState(0);

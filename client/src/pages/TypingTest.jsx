@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import { Card } from "../components/Card"
 import io from 'socket.io-client'
+import { URL_DATA } from "../CONSTANT"
 
-const socket = io(('http://localhost:3000'))
+const socket = io((URL_DATA))
 
 export const TypingTest = () => {
     const [typing, setTyping] = useState('')

@@ -14,7 +14,7 @@ export const Leaderboard = () => {
         try {
             const { data } = await axios({
                 method : "get",
-                url : "http://localhost:3000/leaderboard",
+                url : `${URL_DATA}/leaderboard`,
                 headers : {
                     "Authorization" : "Bearer " + localStorage.access_token
                 }

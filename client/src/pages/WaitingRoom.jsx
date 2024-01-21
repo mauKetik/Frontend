@@ -6,8 +6,9 @@ import { WaitingRoomButton } from "../components/WaitingRoomButton";
 import ButtonSFX from "../sounds/button_shock_sfx.mp3";
 import useSound from "use-sound";
 import { useNavigate } from "react-router-dom";
+import { URL_DATA } from "../CONSTANT";
 
-const socket = io("http://localhost:3000");
+const socket = io(URL_DATA);
 
 export const WaitingRoom = ({ setHiddenModal, roomId, destroyRoomHandle }) => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ export const WaitingRoom = ({ setHiddenModal, roomId, destroyRoomHandle }) => {
   useEffect(() => {
     const getRoomData = async () => {
       const { data } = await axios.get(
-        `http://localhost:3000/rooms/${roomId}`,
+        `${URL_DATA}/rooms/${roomId}`,
         {
           headers: { Authorization: `Bearer ${localStorage.access_token}` },
         }
@@ -51,7 +52,7 @@ export const WaitingRoom = ({ setHiddenModal, roomId, destroyRoomHandle }) => {
   const leaveRoomHandle = async () => {
     play();
     await axios.patch(
-      `http://localhost:3000/leave-room/${roomId}`,
+      `${URL_DATA}/leave-room/${roomId}`,
       {},
       {
         headers: { Authorization: `Bearer ${localStorage.access_token}` },

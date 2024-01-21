@@ -15,7 +15,6 @@ export const Register = () => {
     setForm((prev) => {
       return { ...prev, [event.target.name]: event.target.value };
     });
-    console.log(form);
   }
   async function handleRegister(event) {
     try {

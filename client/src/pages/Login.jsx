@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import swal from "sweetalert";
+
 import { Link, useNavigate } from "react-router-dom";
 import { URL_DATA } from "../CONSTANT";
 import { toast } from 'react-toastify';
@@ -26,6 +26,7 @@ export const Login = () => {
   }, [message, messageType, dispatch]);
   
   const [form, setForm] = useState({ email: "", password: "" });
+  
   function handleInput(event) {
     setForm((prev) => {
       return { ...prev, [event.target.name]: event.target.value };
@@ -39,13 +40,13 @@ export const Login = () => {
         url: URL_DATA + "/login",
         data: { email: form.email, password: form.password },
       });
-      dispatch(setErrorMessage(`Welcome to MauKetik ${data.email}!`));
+      dispatch(setSuccessMessage(`Welcome to MauKetik ${data.email}!`));
 
       localStorage.access_token = data.access_token;
       navigate("/");
     } catch (error) {
       console.log(error.response.statusText);
-      dispatch(setErrorMessage(`Error : ${error.response.statusText}`));
+      dispatch(setErrorMessage(`Error : ${error.response.statusText}` || 'ERROR INPUT'));
     }
   }
   return (

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import axios from "axios";
 import { winRate } from "../helpers/winRate";
+import { URL_DATA } from "../CONSTANT";
 
 
 export const Profile = () => {
@@ -16,7 +17,7 @@ export const Profile = () => {
         try {
             const {data} = await axios({
                 method : "get",
-                url : "http://localhost:3000/my-profile",
+                url : `${URL_DATA}/my-profile`,
                 headers : {
                     "Authorization" : "Bearer " + localStorage.access_token
                 }
